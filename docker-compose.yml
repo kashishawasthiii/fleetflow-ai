@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: fleetflow_db
+      POSTGRES_USER: fleetflow
+      POSTGRES_PASSWORD: fleetflow_local_password
+    volumes:
+      - fleetflow_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fleetflow -d fleetflow_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./Backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://fleetflow:fleetflow_local_password@postgres:5432/fleetflow_db
+      JWT_SECRET_KEY: replace-this-before-production
+      ACCESS_TOKEN_EXPIRE_MINUTES: 720
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: /api
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  fleetflow_postgres:

@@ -1,0 +1,10 @@
+{
+  "name": "FleetFlow AI",
+  "short_name": "FleetFlow",
+  "description": "Last-mile delivery operations control tower",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09111f",
+  "theme_color": "#3478f6",
+  "icons": [{"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"}]
+}
