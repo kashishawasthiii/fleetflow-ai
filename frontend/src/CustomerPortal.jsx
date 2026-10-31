@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { api } from "./api";
 
 export default function CustomerPortal({ token }) {
@@ -6,7 +6,7 @@ export default function CustomerPortal({ token }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     try {
       const response = await api.get(`/tracking/public/${token}`);
       setData(response.data);
@@ -16,13 +16,20 @@ export default function CustomerPortal({ token }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
-    load();
-    const timer = window.setInterval(load, 15000);
-    return () => window.clearInterval(timer);
-  }, [token]);
+    const initialLoad = window.setTimeout(() => {
+      void load();
+    }, 0);
+    const timer = window.setInterval(() => {
+      void load();
+    }, 15000);
+    return () => {
+      window.clearTimeout(initialLoad);
+      window.clearInterval(timer);
+    };
+  }, [load]);
 
   const progress = useMemo(() => {
     const states = ["Pending", "Dispatched", "In Transit", "In Progress", "Delivered"];

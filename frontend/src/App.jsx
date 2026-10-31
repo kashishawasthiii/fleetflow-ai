@@ -159,7 +159,10 @@ function OperationsApp() {
   }, [token]);
 
   useEffect(() => {
-    loadData();
+    const initialLoad = window.setTimeout(() => {
+      void loadData();
+    }, 0);
+    return () => window.clearTimeout(initialLoad);
   }, [loadData]);
 
   useEffect(() => {

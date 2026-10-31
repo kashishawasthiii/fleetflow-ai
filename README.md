@@ -1,64 +1,115 @@
-# FleetFlow AI
+# 🚚 FleetFlow AI
 
-![FleetFlow AI product showcase](./FleetFlow-LinkedIn-Showcase.png)
+<h3 align="center">
+AI-Powered Last-Mile Logistics Control Tower
+</h3>
 
-FleetFlow is a logistics control tower for small and mid-sized delivery teams. It turns order, driver, location and route data into dispatch decisions that an operations manager can review and approve.
+<p align="center">
+Turn orders, driver capacity, GPS signals and delivery events into explainable dispatch decisions.
+</p>
 
-## Product vision
+---
 
-The product is built around a simple idea: dispatchers should see the next operational risk before it becomes a missed delivery. FleetFlow combines verified locations, capacity-aware assignment, route sequencing and explainable decision support in one workspace.
+## 🚀 Overview
 
-## What is implemented
+FleetFlow AI is a real-world logistics operations platform for small and mid-sized delivery teams. It helps dispatch managers monitor fleet health, identify SLA risk, assign the right driver, share safe customer tracking links and close deliveries with verifiable proof.
 
-- React + Vite operations dashboard with Dashboard, Orders, Drivers, Routes and Analytics workspaces.
-- FastAPI + SQLAlchemy backend backed by PostgreSQL.
-- Order and driver management with assignment and delivery lifecycle updates.
-- Address verification with OpenStreetMap Nominatim and saved coordinates.
-- Pickup-before-delivery route optimization and optional OSRM road distance estimates.
-- Capacity-aware Dispatch Copilot that scores drivers by proximity, remaining capacity and workload, then requires manager approval before assignment.
-- SLA Shield explainable intelligence brief with live risk scoring, fleet utilization, priority exceptions and suggested next actions.
-- Searchable and filterable order operations plus driver capacity heatmap.
-- JWT authentication with an owner workspace account and protected operations API.
-- Live driver GPS ingestion endpoint, latest-position feed and authenticated WebSocket stream.
-- In-app operational notifications with unread state and browser-ready polling.
-- Expiring customer tracking links with a public, privacy-safe delivery portal and timeline.
-- Automated backend tests for security, route constraints and SLA risk scoring.
-- Docker Compose deployment with PostgreSQL, FastAPI and Nginx-served React frontend.
-- Industry workflows: proof of delivery, geofence arrival alerts, ETA recalculation, failed-delivery recovery, COD reconciliation and preventive maintenance.
-- Exception inbox, dispatch what-if simulation, integration import idempotency, audit log and installable PWA shell.
+The project is designed around a practical operations workflow: every recommendation is reviewable, every important event is auditable and provider integrations can be enabled when production credentials are available.
 
-## Portfolio honesty / feature status
+## ✨ Features
 
-The core operations product is implemented in this repository: authentication, dispatch workflows, route sequencing, SLA Shield, Dispatch Copilot, GPS ingestion/WebSocket streaming, customer tracking, proof of delivery, geofencing, ETA calculation, COD records, maintenance records, exception management and audit logging.
+- 📊 Operations dashboard for orders, drivers, routes and analytics
+- 🛡️ SLA Shield with explainable risk scores and suggested next actions
+- 🤖 Dispatch Copilot for capacity-aware driver recommendations with manager approval
+- 🗺️ Address verification, pickup-before-delivery route sequencing and ETA calculation
+- 📍 Authenticated GPS ingestion with latest-position feed and real-time WebSocket updates
+- 🔐 Owner authentication and protected operations APIs
+- 🔔 In-app notifications, exception inbox and audit log
+- 📦 Delivery lifecycle management: failed, rescheduled, returned and delivered orders
+- 🔗 Expiring customer tracking links with a privacy-safe public portal
+- ✅ Proof of delivery with recipient, signature, OTP verification and notes
+- 🧭 Geofence arrival alerts and driver location history
+- 💰 COD reconciliation, preventive maintenance and dispatch what-if simulation
+- 📥 Idempotent integration import workflow for external order feeds
+- 📱 Installable PWA shell for operations teams
+- 🐳 Docker Compose deployment with PostgreSQL, FastAPI and Nginx
+- 🧪 Automated backend tests plus frontend lint and production build checks
 
-The notification and integration layers are provider-ready. SMS, WhatsApp, email, Shopify and WooCommerce require production credentials and webhook configuration before they can send or ingest live third-party traffic. The showcase image is a product overview graphic; dashboard numbers shown inside it are illustrative and should not be presented as live production metrics.
+## 🛠 Tech Stack
 
-For a recruiter demo, describe FleetFlow as an explainable last-mile logistics control tower and call out the exact workflow you can demonstrate live: create an order, verify its locations, assess a driver with Dispatch Copilot, generate a customer tracking link, send a GPS point, trigger a geofence event and close the delivery with proof.
+| Frontend | Backend | Data & Delivery |
+|---|---|---|
+| React 19 | FastAPI | PostgreSQL |
+| Vite | Python | SQLAlchemy |
+| CSS | WebSockets | Docker Compose |
+| Axios | Uvicorn | Nginx |
 
-## Run locally
+## 📂 Project Structure
 
-1. Create a PostgreSQL database named `fleetflow_db` and copy `Backend/.env.example` to `Backend/.env`.
-2. Install backend dependencies and initialize tables:
+```text
+FleetFlow AI/
+├── Backend/
+│   ├── app/
+│   ├── tests/
+│   ├── init_db.py
+│   └── seed_demo.py
+├── frontend/
+│   ├── src/
+│   └── public/
+├── .github/workflows/ci.yml
+├── docker-compose.yml
+├── screenshots/
+│   ├── operations-showcase.png
+│   └── product-overview.png
+├── LICENSE
+└── README.md
+```
 
-   ```powershell
-   cd Backend
-   python -m pip install -r requirements.txt
-   python init_db.py
-   python seed_demo.py
-   uvicorn app.main:app --reload
-   ```
+## 📸 Screenshots
 
-3. Start the frontend in a second terminal:
+### Product Showcase
 
-   ```powershell
-   cd frontend
-   npm install
-   npm run dev
-   ```
+![FleetFlow AI operations showcase](./screenshots/operations-showcase.png)
 
-The frontend expects FastAPI at `http://127.0.0.1:8000`.
+### Product Hero
 
-## Production-style launch with Docker
+![FleetFlow AI product hero](./screenshots/product-overview.png)
+
+## ⚙️ Installation
+
+### Clone the repository
+
+```bash
+git clone https://github.com/kashishawasthiii/fleetflow-ai.git
+cd fleetflow-ai
+```
+
+### Backend
+
+```powershell
+cd Backend
+python -m venv venv
+venv\Scripts\activate
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+python init_db.py
+python seed_demo.py
+uvicorn app.main:app --reload
+```
+
+### Frontend
+
+Open a second terminal:
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173` in your browser. The frontend expects FastAPI at `http://127.0.0.1:8000`.
+
+### Docker launch
 
 From the repository root:
 
@@ -66,35 +117,52 @@ From the repository root:
 docker compose up --build
 ```
 
-Open `http://localhost:5173`, create the first owner account, then use the Orders workspace to generate a customer tracking link. Before a public launch, replace `JWT_SECRET_KEY`, database credentials and the development CORS origins with managed secrets and your production domain.
+Before a public launch, replace the development database credentials, `JWT_SECRET_KEY`, CORS origins and third-party provider settings with managed production secrets.
 
-## Automated tests
+## 🧠 How It Works
+
+1. A manager creates or imports an order and verifies pickup and destination coordinates.
+2. SLA Shield scores delivery risk from priority, due time, assignment and operational signals.
+3. Dispatch Copilot ranks eligible drivers using capacity, proximity and workload.
+4. A manager approves the assignment and the driver sends authenticated GPS updates.
+5. The team monitors live events, geofence alerts and exceptions in the control tower.
+6. The customer receives an expiring tracking link, and the team closes the order with proof of delivery.
+
+## 🧪 Automated Tests
 
 ```powershell
 cd Backend
 python -m unittest discover -s tests -v
 ```
 
-## Real-time driver integration
+The GitHub Actions workflow also runs Python compilation, backend tests, frontend linting and the production build for every push and pull request.
 
-Driver apps or a hardware gateway can send authenticated GPS points to `POST /drivers/{driver_id}/location`. Operations clients subscribe to `/ws/fleet?token=<access_token>` and receive location events immediately. The database also retains the location history for audit and replay.
+## 📌 Feature Status
 
-## Product positioning
+The core operations workflows are implemented and demo-ready in this repository. SMS, WhatsApp, email, Shopify and WooCommerce connectors are provider-ready; live traffic from those services requires production credentials and webhook configuration.
 
-FleetFlow is intentionally transparent about its intelligence layer. SLA Shield is deterministic, evidence-backed decision support rather than an opaque autonomous dispatcher. That makes each recommendation explainable to a manager and safe to demonstrate in a real operations workflow.
+The showcase images are visual product assets. Any dashboard numbers shown in them are illustrative, not live production metrics.
 
-## Publish to GitHub
+## 🤝 Contributing
 
-Create an empty public repository named `fleetflow-ai` on GitHub, then run these commands from the project root:
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make and test your changes.
+4. Commit and push your branch.
+5. Open a pull request.
 
-```powershell
-git init
-git branch -M main
-git add .
-git status --short
-git commit -m "feat: launch FleetFlow AI logistics control tower"
-git remote add origin https://github.com/<your-username>/fleetflow-ai.git
-git push -u origin main
-```
+## 📄 License
 
-Before committing, confirm that `Backend/.env`, `Backend/venv`, `frontend/node_modules` and `frontend/dist` do not appear in the staged files. Only `.env.example` files should be published. The repository includes a GitHub Actions workflow at `.github/workflows/ci.yml` that runs backend tests, Python compilation, frontend linting and the production build on every push and pull request.
+This project is licensed under the [MIT License](./LICENSE).
+
+## 👨‍💻 Author
+
+**Kashish Awasthi**  
+Computer Science Engineering Student  
+AI • Machine Learning • Full Stack Development
+
+---
+
+<p align="center">
+Built with React, FastAPI and a focus on safer, more explainable logistics operations.
+</p>
