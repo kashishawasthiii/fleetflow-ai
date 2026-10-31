@@ -59,21 +59,31 @@ FleetFlow AI/
 ├── .github/workflows/ci.yml
 ├── docker-compose.yml
 ├── screenshots/
-│   ├── operations-showcase.png
-│   └── product-overview.png
+│   ├── dashboard.png
+│   ├── orders.png
+│   ├── routes-dispatch.png
+│   └── analytics.png
 ├── LICENSE
 └── README.md
 ```
 
 ## 📸 Screenshots
 
-### Product Showcase
+### Operations Dashboard
 
-![FleetFlow AI operations showcase](./screenshots/operations-showcase.png)
+![FleetFlow AI live operations dashboard](./screenshots/dashboard.png)
 
-### Product Hero
+### Order Management
 
-![FleetFlow AI product hero](./screenshots/product-overview.png)
+![FleetFlow AI live order management](./screenshots/orders.png)
+
+### Routes & Dispatch
+
+![FleetFlow AI live routes and dispatch workspace](./screenshots/routes-dispatch.png)
+
+### Analytics
+
+![FleetFlow AI live analytics workspace](./screenshots/analytics.png)
 
 ## ⚙️ Installation
 
